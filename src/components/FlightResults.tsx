@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Route as FlightRoute } from '@/services/routeFinder';
-import { Plane, Clock, ArrowRight, IndianRupee } from 'lucide-react';
+import { Plane, Clock, ArrowRight, IndianRupee, Ticket } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FlightResultsProps {
@@ -36,6 +36,14 @@ const FlightResults: React.FC<FlightResultsProps> = ({
   const handleSelectRoute = (route: FlightRoute) => {
     setSelectedRoute(route);
     onSelectRoute(route);
+  };
+
+  const handleBookNow = (route: FlightRoute) => {
+    // Construct a URL for MakeMyTrip with relevant parameters
+    const fromCity = route.segments[0].from.city;
+    const toCity = route.segments[route.segments.length - 1].to.city;
+    const makeMyTripUrl = `https://www.makemytrip.com/railways/listing/?fromCity=${encodeURIComponent(fromCity)}&toCity=${encodeURIComponent(toCity)}`;
+    window.open(makeMyTripUrl, '_blank');
   };
 
   if (loading) {
@@ -145,12 +153,19 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                     </div>
                   </div>
                   
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4 flex justify-end space-x-2">
                     <Button 
-                      variant={selectedRoute === route ? "default" : "outline"}
+                      variant="outline"
                       onClick={() => handleSelectRoute(route)}
                     >
-                      {selectedRoute === route ? 'Selected' : 'View Route'}
+                      View Route
+                    </Button>
+                    <Button 
+                      variant="default"
+                      className="bg-red-600 hover:bg-red-700 text-white"
+                      onClick={() => handleBookNow(route)}
+                    >
+                      <Ticket className="mr-1 h-4 w-4" /> Book Train
                     </Button>
                   </div>
                 </div>
@@ -229,12 +244,19 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                         </div>
                       </div>
                       
-                      <div className="mt-4 flex justify-end">
+                      <div className="mt-4 flex justify-end space-x-2">
                         <Button 
-                          variant={selectedRoute === route ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => handleSelectRoute(route)}
                         >
-                          {selectedRoute === route ? 'Selected' : 'View Route'}
+                          View Route
+                        </Button>
+                        <Button 
+                          variant="default"
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                          onClick={() => handleBookNow(route)}
+                        >
+                          <Ticket className="mr-1 h-4 w-4" /> Book Train
                         </Button>
                       </div>
                     </div>
@@ -325,12 +347,19 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                         </div>
                       </div>
                       
-                      <div className="mt-4 flex justify-end">
+                      <div className="mt-4 flex justify-end space-x-2">
                         <Button 
-                          variant={selectedRoute === route ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => handleSelectRoute(route)}
                         >
-                          {selectedRoute === route ? 'Selected' : 'View Route'}
+                          View Route
+                        </Button>
+                        <Button 
+                          variant="default"
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                          onClick={() => handleBookNow(route)}
+                        >
+                          <Ticket className="mr-1 h-4 w-4" /> Book Train
                         </Button>
                       </div>
                     </div>
