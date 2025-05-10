@@ -4,6 +4,7 @@ import { fetchOptimalRoute, convertApiRouteToFlightRoute } from '@/services/apiS
 import FlightSearch from '@/components/FlightSearch';
 import FlightResults from '@/components/FlightResults';
 import RouteMap from '@/components/RouteMap';
+import { Card, CardContent } from "@/components/ui/card";
 import { Plane, Route, IndianRupee, Map, Clock, Filter, User, Server } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import MainHeader from '@/components/MainHeader';
