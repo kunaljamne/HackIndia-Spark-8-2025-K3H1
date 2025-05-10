@@ -150,7 +150,7 @@ export const flights: Flight[] = [
   { id: "AI930", from: "GOI", to: "BLR", airline: "Air India", flightNumber: "AI930", departureTime: "11:00", arrivalTime: "12:15", duration: 75, price: 3500 },
   { id: "AI940", from: "CCU", to: "MAA", airline: "Air India", flightNumber: "AI940", departureTime: "08:15", arrivalTime: "10:45", duration: 150, price: 5900 },
   { id: "AI950", from: "AMD", to: "BLR", airline: "Air India", flightNumber: "AI950", departureTime: "09:30", arrivalTime: "11:45", duration: 135, price: 5100 },
-  
+
   // Port Blair routes
   { id: "AI960", from: "IXZ", to: "MAA", airline: "Air India", flightNumber: "AI960", departureTime: "11:00", arrivalTime: "13:15", duration: 135, price: 6900 },
   { id: "AI961", from: "MAA", to: "IXZ", airline: "Air India", flightNumber: "AI961", departureTime: "07:30", arrivalTime: "09:45", duration: 135, price: 7100 },
