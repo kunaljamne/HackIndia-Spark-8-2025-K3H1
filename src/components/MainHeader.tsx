@@ -25,7 +25,7 @@ const MainHeader = () => {
           <nav className="hidden md:flex items-center space-x-6">
             <a href="#" className="text-gray-600 hover:text-sky-600 flex items-center space-x-1 text-sm">
               <Ticket className="h-4 w-4" />
-              <span>Train Booking</span>
+              <span>Flight Booking</span>
             </a>
             <a href="#" className="text-gray-600 hover:text-sky-600 flex items-center space-x-1 text-sm">
               <User className="h-4 w-4" />
@@ -56,7 +56,7 @@ const MainHeader = () => {
                 <nav className="flex flex-col space-y-6 pt-8">
                   <a href="#" className="text-gray-600 hover:text-sky-600 flex items-center space-x-2">
                     <Ticket className="h-5 w-5" />
-                    <span>Train Booking</span>
+                    <span>Flight Booking</span>
                   </a>
                   <a href="#" className="text-gray-600 hover:text-sky-600 flex items-center space-x-2">
                     <User className="h-5 w-5" />

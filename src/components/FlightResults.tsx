@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -165,7 +164,7 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                       className="bg-red-600 hover:bg-red-700 text-white"
                       onClick={() => handleBookNow(route)}
                     >
-                      <Ticket className="mr-1 h-4 w-4" /> Book Train
+                      <Ticket className="mr-1 h-4 w-4" /> Book Flight
                     </Button>
                   </div>
                 </div>
@@ -185,7 +184,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                         selectedRoute === route ? 'border-sky-500 bg-sky-50' : 'hover:bg-muted/30'
                       }`}
                     >
-                      {/* Same content as above */}
                       <div className="flex flex-col">
                         <div className="flex justify-between items-center mb-3">
                           <div className="flex items-center space-x-2">
@@ -199,7 +197,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                           </div>
                         </div>
                         
-                        {/* Rest of flight details */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
                           <div className="flex items-center space-x-2">
                             <Clock className="h-4 w-4 text-muted-foreground" />
@@ -216,7 +213,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                           </div>
                         </div>
                         
-                        {/* Flight segment */}
                         <div className="space-y-3 mt-2">
                           <div className="flex items-center text-sm">
                             <div className="flex-1">
@@ -256,7 +252,7 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                           className="bg-red-600 hover:bg-red-700 text-white"
                           onClick={() => handleBookNow(route)}
                         >
-                          <Ticket className="mr-1 h-4 w-4" /> Book Train
+                          <Ticket className="mr-1 h-4 w-4" /> Book Flight
                         </Button>
                       </div>
                     </div>
@@ -281,7 +277,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                         selectedRoute === route ? 'border-sky-500 bg-sky-50' : 'hover:bg-muted/30'
                       }`}
                     >
-                      {/* Same content structure as above */}
                       <div className="flex flex-col">
                         <div className="flex justify-between items-center mb-3">
                           <div className="flex items-center space-x-2">
@@ -295,7 +290,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                           </div>
                         </div>
                         
-                        {/* Rest of flight details */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
                           <div className="flex items-center space-x-2">
                             <Clock className="h-4 w-4 text-muted-foreground" />
@@ -312,7 +306,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                           </div>
                         </div>
                         
-                        {/* Flight segments for 1-stop route */}
                         <div className="space-y-3 mt-2">
                           {route.segments.map((segment, idx) => (
                             <div key={idx} className="flex items-center text-sm">
@@ -340,7 +333,6 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                             </div>
                           ))}
                           
-                          {/* Layover info */}
                           <div className="mx-auto text-center bg-muted/30 rounded-lg py-1 px-3 text-xs text-muted-foreground mt-2">
                             Layover at {route.segments[0].to.city} ({route.segments[0].to.code})
                           </div>
@@ -359,7 +351,7 @@ const FlightResults: React.FC<FlightResultsProps> = ({
                           className="bg-red-600 hover:bg-red-700 text-white"
                           onClick={() => handleBookNow(route)}
                         >
-                          <Ticket className="mr-1 h-4 w-4" /> Book Train
+                          <Ticket className="mr-1 h-4 w-4" /> Book Flight
                         </Button>
                       </div>
                     </div>
