@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,25 +11,19 @@ interface FlightResultsProps {
   routes: FlightRoute[];
   loading: boolean;
   onSelectRoute: (route: FlightRoute) => void;
-  usingBackend?: boolean;
 }
 
 const FlightResults: React.FC<FlightResultsProps> = ({ 
   routes, 
   loading, 
-  onSelectRoute,
-  usingBackend = false
+  onSelectRoute 
 }) => {
   const [selectedRoute, setSelectedRoute] = useState<FlightRoute | null>(null);
-  const [isBackendError, setIsBackendError] = useState(false);
 
   useEffect(() => {
     // Reset selection when routes change
     setSelectedRoute(null);
-    
-    // Check if there's a backend connection error
-    setIsBackendError(usingBackend && routes.length === 0);
-  }, [routes, usingBackend]);
+  }, [routes]);
 
   const handleSelectRoute = (route: FlightRoute) => {
     setSelectedRoute(route);
@@ -37,8 +32,8 @@ const FlightResults: React.FC<FlightResultsProps> = ({
 
   const handleBookNow = (route: FlightRoute) => {
     // Construct a URL for MakeMyTrip with relevant parameters
-    const fromCity = route.segments[0]?.from?.city || '';
-    const toCity = route.segments[route.segments.length - 1]?.to?.city || '';
+    const fromCity = route.segments[0].from.city;
+    const toCity = route.segments[route.segments.length - 1].to.city;
     const makeMyTripUrl = `https://www.makemytrip.com/railways/listing/?fromCity=${encodeURIComponent(fromCity)}&toCity=${encodeURIComponent(toCity)}`;
     window.open(makeMyTripUrl, '_blank');
   };
@@ -48,7 +43,7 @@ const FlightResults: React.FC<FlightResultsProps> = ({
   }
 
   if (routes.length === 0) {
-    return <EmptyFlightResults isBackendError={isBackendError} />;
+    return <EmptyFlightResults />;
   }
 
   return (
