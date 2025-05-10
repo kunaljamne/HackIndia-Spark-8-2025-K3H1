@@ -1,5 +1,17 @@
-# Welcome to your Lovable project
+# Welcome 
+## project Name
+Optimal Flight Route Finder
 
+## project description
+Problem: Flight planning today can be overwhelming too many choices, complex layovers and hidden costs.
+
+Our idea:
+
+Solution acts as a smart travel assistant, analyzing real-world airline data to recommend the fastest, cheapest and most efficient flight routes based on user preferences.
+
+Technology uses:
+
+Built using MeTTa, Python and pathfinding algorithms like Dijkstra's and A*. our system intelligently optimizes flight paths, making travel planning simpler and smarter.
 ## Project info
 
 **URL**: https://lovable.dev/projects/3ca54c95-873f-4c1e-9726-d33e147c8c97
@@ -53,13 +65,14 @@ npm run dev
 ## What technologies are used for this project?
 
 This project is built with:
-
+ for frontend
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
-
+backend
+fastAPI and python
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/3ca54c95-873f-4c1e-9726-d33e147c8c97) and click on Share -> Publish.
