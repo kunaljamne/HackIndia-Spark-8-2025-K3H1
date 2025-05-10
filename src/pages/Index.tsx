@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Route as FlightRoute, OptimizationCriteria, findOptimalRoutes } from '@/services/routeFinder';
+import { fetchOptimalRoute, convertApiRouteToFlightRoute } from '@/services/apiService';
 import FlightSearch from '@/components/FlightSearch';
 import FlightResults from '@/components/FlightResults';
 import RouteMap from '@/components/RouteMap';
-import { Plane, Route, IndianRupee, Map, Clock, Filter, User, HelpCircle, Info } from 'lucide-react';
+import { Plane, Route, IndianRupee, Map, Clock, Filter, User, Server } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import MainHeader from '@/components/MainHeader';
 import Footer from '@/components/Footer';
@@ -14,17 +14,44 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState<FlightRoute | null>(null);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [usingBackend, setUsingBackend] = useState(false);
+  const [apiData, setApiData] = useState<{ algorithm: string; path: string[] } | null>(null);
   const { toast } = useToast();
   
-  const handleSearch = (from: string, to: string, criteria: OptimizationCriteria) => {
+  const handleSearch = async (from: string, to: string, criteria: OptimizationCriteria) => {
     setLoading(true);
     setSelectedRoute(null);
     setSearchPerformed(true);
+    setApiData(null);
+    
+    // Decide whether to use backend or frontend routing
+    const useBackend = true; // Set to true to use the FastAPI backend
+    setUsingBackend(useBackend);
     
     // Small timeout to show the loading state
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
-        const results = findOptimalRoutes(from, to, criteria, 10);
+        let results: FlightRoute[] = [];
+        
+        if (useBackend) {
+          // Use FastAPI backend
+          const fromAirport = from.toUpperCase(); // Assuming airport codes are uppercase in your backend
+          const toAirport = to.toUpperCase();
+          
+          // Map criteria to algorithm
+          const algorithm = criteria === 'stops' ? 'dijkstra' : 'astar';
+          
+          const apiResult = await fetchOptimalRoute(fromAirport, toAirport, algorithm);
+          results = convertApiRouteToFlightRoute(apiResult, from, to);
+          setApiData({
+            algorithm: apiResult.algorithm,
+            path: apiResult.path
+          });
+        } else {
+          // Use existing frontend implementation
+          results = findOptimalRoutes(from, to, criteria, 10);
+        }
+        
         setRoutes(results);
         
         if (results.length === 0) {
@@ -36,14 +63,16 @@ const Index = () => {
         } else {
           toast({
             title: "Routes found",
-            description: `Found ${results.length} possible routes`,
+            description: `Found ${results.length} possible routes${useBackend ? ' from API' : ''}`,
           });
         }
       } catch (error) {
         console.error('Error finding routes:', error);
         toast({
           title: "Error",
-          description: "Failed to find routes. Please try again.",
+          description: useBackend 
+            ? "Failed to connect to backend API. Please make sure the server is running."
+            : "Failed to find routes. Please try again.",
           variant: "destructive",
         });
         setRoutes([]);
@@ -73,7 +102,28 @@ const Index = () => {
                 routes={routes} 
                 loading={loading} 
                 onSelectRoute={handleSelectRoute} 
+                usingBackend={usingBackend}
               />
+              
+              {usingBackend && apiData && (
+                <div className="mt-6">
+                  <Card className="bg-sky-50 border-sky-200">
+                    <CardContent className="pt-6">
+                      <div className="flex items-center mb-2">
+                        <Server className="h-5 w-5 mr-2 text-sky-600" />
+                        <h3 className="font-medium">FastAPI Backend</h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        This route was calculated using the FastAPI backend with {apiData.algorithm} algorithm.
+                      </p>
+                      <div className="text-xs bg-white rounded-md p-2 border border-sky-200">
+                        <p><strong>Path:</strong> {apiData.path.join(' → ')}</p>
+                        <p><strong>Stops:</strong> {apiData.path.length - 1}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
             </div>
             <div className="lg:col-span-1">
               <RouteMap selectedRoute={selectedRoute} />
@@ -169,7 +219,7 @@ const Index = () => {
                 <div className="bg-white rounded-lg p-5 shadow-sm border">
                   <div className="flex items-center mb-3">
                     <div className="bg-sky-100 p-2 rounded-full mr-3">
-                      <IndianRupee className="h-5 w-5 text-sky-600" />
+                      <IndianRupee className="h-5 w-6 text-sky-600" />
                     </div>
                     <h3 className="font-medium">INR Pricing</h3>
                   </div>
